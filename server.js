@@ -7,9 +7,28 @@ const cors        = require('cors');
 const apiRoutes         = require('./routes/api.js');
 const fccTestingRoutes  = require('./routes/fcctesting.js');
 const runner            = require('./test-runner');
+const helmet            = require('helmet');
 
 const app = express();
-
+// Helmet middleware to set Content Security Policy
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"], // default source for various content types
+      scriptSrc: ["'self'"], // sources for scripts
+      styleSrc: ["'self'"], // sources for stylesheets
+      fontSrc: ["'self'"], // sources for fonts
+      imgSrc: ["'self'"], // sources for images
+      objectSrc: ["'none'"], // sources for objects
+      mediaSrc: ["'self'"], // sources for media files (audio and video)
+      frameSrc: ["'none'"], // sources for frames
+      childSrc: ["'self'"], // sources for child frames
+      formAction: ["'self'"], // sources for form submissions
+      connectSrc: ["'self'"] // sources for XHR, WebSocket, EventSource, etc.
+      // Add any additional directives as needed
+    },
+  })
+);
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(cors({origin: '*'})); //For FCC testing purposes only
@@ -53,3 +72,4 @@ const listener = app.listen(process.env.PORT || 3000, function () {
 });
 
 module.exports = app; //for testing
+
