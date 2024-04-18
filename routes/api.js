@@ -26,7 +26,7 @@ module.exports = function (app) {
                 const stockObj = {
                   stock: stockInfo.symbol,
                   price: stockInfo.latestPrice,
-                  likes: like ? 1 : 0 // Convert 'like' parameter to number of likes (1 if true, 0 if false)
+                  likes: like ? req.ip : 0 // Convert 'like' parameter to number of likes (1 if true, 0 if false)
                 };
                 stockData.push(stockObj);
                 resolve();
