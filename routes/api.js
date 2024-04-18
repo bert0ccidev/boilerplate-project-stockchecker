@@ -4,9 +4,10 @@ module.exports = function (app) {
   app.route('/api/stock-prices')
     .get(function (req, res) {
       const stocks = Array.isArray(req.query.stock) ? req.query.stock : [req.query.stock];
-      const likes = req.query.like || false; // Default to false if 'like' parameter is not provided
-
       let stockData = [];
+
+      // Check if 'like' parameter exists in the query string
+      const like = req.query.hasOwnProperty('like') ? (req.query.like === 'true') : false;
 
       // Make requests to the external API for each stock
       const promises = stocks.map(stock => {
@@ -25,7 +26,7 @@ module.exports = function (app) {
                 const stockObj = {
                   stock: stockInfo.symbol,
                   price: stockInfo.latestPrice,
-                  likes: likes ? 1 : 0 // Convert 'like' parameter to number of likes (1 if true, 0 if false)
+                  likes: like ? 1 : 0 // Convert 'like' parameter to number of likes (1 if true, 0 if false)
                 };
                 stockData.push(stockObj);
                 resolve();
