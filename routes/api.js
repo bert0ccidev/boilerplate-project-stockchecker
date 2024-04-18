@@ -1,5 +1,13 @@
 const https = require('https');
-
+// --------SPACE--------------SPACE--------------SPACE-----------
+// -----------------SPACE--------------SPACE--------------SPACE-----------
+//db on .env
+const express = require('express');
+const app = express();
+const db = require('./db');
+// --------SPACE--------------SPACE--------------SPACE-----------
+// -----------------SPACE--------------SPACE--------------SPACE-----------
+// *actuall api BELOW
 module.exports = function (app) {
   app.route('/api/stock-prices')
     .get(function (req, res) {
